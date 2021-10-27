@@ -14,20 +14,27 @@ using std::string;
 
 void _gspmm(csr_t* snaph, array2d_t<float> & input, array2d_t<float> & output, 
                      op_t op, bool reverse, bool norm /*= true*/)
-{
-    //cout << "spmm " << op << "reverse = " << reverse << endl;
-
-    //If in backward, normalize it first, else normalize it after computation
-    
+{   
     //The core logic goes here.
-    //
-
-    //if (!reverse){
-    //    cout << input.row_count << endl;
-    //}
-    //cout << input.row_count << endl;
     int cnt=snaph->get_vcount();
-    cout << cnt << endl;
+    output.reset();
+
+    if(reverse){
+        for (int i=0; i<cnt; i++){
+            input.row_normalize(i, snaph->get_degree(i));
+        }
+    }
+
+    for (int i=0; i<cnt; i++){
+        for (int j=snaph->offset[i]; j<snaph->offset[i+1];j++){
+            array1d_t<float> t = input.get_row(snaph->nebrs[j]);
+            output.row_add(t.data_ptr,i);
+        }
+        if (!reverse){
+            output.row_normalize(i, snaph->get_degree(i));
+        }
+    }
+
 }
 
 void invoke_gspmm(graph_t& graph, array2d_t<float> & input_array, array2d_t<float> & output_array,
@@ -39,3 +46,4 @@ void invoke_gspmm(graph_t& graph, array2d_t<float> & input_array, array2d_t<floa
          return _gspmm(&graph.csc, input_array, output_array, eSUM, reverse, norm);
     }
 }
+

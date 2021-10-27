@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yyan09/bd/Deep-Education/kernel/csr.h
+stdint.h
+/home/yyan09/bd/Deep-Education/kernel/stdint.h
+
+/home/yyan09/bd/Deep-Education/kernel/kernel.cpp
+cassert
+-
+iostream
+-
+limits
+-
+kernel.h
+/home/yyan09/bd/Deep-Education/kernel/kernel.h
+
+/home/yyan09/bd/Deep-Education/kernel/kernel.h
+csr.h
+/home/yyan09/bd/Deep-Education/kernel/csr.h
+op.h
+/home/yyan09/bd/Deep-Education/kernel/op.h
+
+/home/yyan09/bd/Deep-Education/kernel/op.h
+string
+-
+cstring
+-
+

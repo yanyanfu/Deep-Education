@@ -19,7 +19,15 @@ void _gspmm(csr_t* snaph, array2d_t<float> & input, array2d_t<float> & output,
 
     //If in backward, normalize it first, else normalize it after computation
     
-    //The core logic goes here.    
+    //The core logic goes here.
+    //
+
+    //if (!reverse){
+    //    cout << input.row_count << endl;
+    //}
+    //cout << input.row_count << endl;
+    int cnt=snaph->get_vcount();
+    cout << cnt << endl;
 }
 
 void invoke_gspmm(graph_t& graph, array2d_t<float> & input_array, array2d_t<float> & output_array,

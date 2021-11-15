@@ -1,6 +1,0 @@
-/home/yyan09/bd/Deep-Education/kernel/CMakeFiles/rebuild_cache.dir
-/home/yyan09/bd/Deep-Education/kernel/CMakeFiles/edit_cache.dir
-/home/yyan09/bd/Deep-Education/kernel/CMakeFiles/kernel64.dir
-/home/yyan09/bd/Deep-Education/kernel/CMakeFiles/kernel.dir
-/home/yyan09/bd/Deep-Education/kernel/pybind11/CMakeFiles/rebuild_cache.dir
-/home/yyan09/bd/Deep-Education/kernel/pybind11/CMakeFiles/edit_cache.dir

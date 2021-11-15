@@ -3,6 +3,7 @@
 #include <limits>
 
 #include "kernel.h"
+#include "omp.h"
 
 using std::cout;
 using std::endl;
@@ -10,7 +11,6 @@ using std::endl;
 int THD_COUNT = 1;
 
 using std::string;
-
 
 void _gspmm(csr_t* snaph, array2d_t<float> & input, array2d_t<float> & output, 
                      op_t op, bool reverse, bool norm /*= true*/)
@@ -20,11 +20,13 @@ void _gspmm(csr_t* snaph, array2d_t<float> & input, array2d_t<float> & output,
     output.reset();
 
     if(reverse){
+        #pragma omp parallel for
         for (int i=0; i<cnt; i++){
             input.row_normalize(i, snaph->get_degree(i));
         }
     }
-
+    
+    #pragma omp parallel for
     for (int i=0; i<cnt; i++){
         for (int j=snaph->offset[i]; j<snaph->offset[i+1];j++){
             array1d_t<float> t = input.get_row(snaph->nebrs[j]);

@@ -21,11 +21,9 @@ python3 ../dl_code_python/GCN_pubmed.py
 
 
 ```
-cd ../
-rm -rf build
-rm dl_code_python/kernel.cpython-38-x86_64-linux-gnu.so
-mkdir build
-cd build
+
+rm -rf *
+rm ../dl_code_python/kernel.cpython-38-x86_64-linux-gnu.so
 cmake ../multi_kernel
 make
 cp kernel.cpython-38-x86_64-linux-gnu.so  ../dl_code_python
@@ -78,4 +76,3 @@ Epoch 199 | Train_Loss: 0.0475
 the time of graphpy is: 0:00:03.262408
 Epoch 199 | Test_accuracy: 0.7640
 ```
-

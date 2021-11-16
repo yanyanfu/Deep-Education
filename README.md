@@ -1,13 +1,81 @@
-# Deep-Education
+# GCN and Multi-Thread GCN
 
-This repository is now available for public use for teaching end to end workflow of deep learning.  This implies that learners/researchers will learn (by doing) beyond what is generally available as tutorial on general-purpose deep learning framework. 
-The aim is to learn how to write a new operator as part of deep learning layer, and how to use it inside a deep learning module using Python environment (Pytorch or Tensorflow). The second stage is to know more about the role of tensor in the computation graph (forward and backward computation) and implement the kernel of the new operator in an independent C++ module.
+```
+git clone --recurse-submodules https://github.com/yanyanfu/Deep-Education.git
+cd Deep-Education
+```
 
-At the end of the assignment, you will learn following things:
-- How to introduce a new operator and deep learning layer in Pytorch (ask us if you want to use Tensorflow) using its semantics. 
-- What is backward computation or gradient computation in a deep lerning training, and how to implement it for a new operator, and make it part of computation graph so that it is automatically invoked during training, but not during inference.
-- How to implement the business/core logic of the operator in C++ (called kernel) in an independent C++ module. One can implement the kernel using pytorch's plugin environment. But then you should realize that it is not simple to do that, specifically in a classroom teaching (or may be in research) due to steep learning curve. In this assignment, our approach is simple: writing kernel should be in an almost independent C++ module, so that no steep learning may be needed. However, you must undertand the tensor data structure of the deep learning framework, and why this data structure is most important one to make the layer/operator part of computation graph. You should also undertand, why it is hard to pass this tensor object to an independent C++ module.
-- If you are interested in writing the kernel in GPU, please wait, we are still making the code open-source. But the overall process remains same.
+## Test for single-thread GCN
 
 
-Watch out this space for more clarity on the current and future assignments.
+```
+mkdir build
+cd build
+cmake ../kernel
+make
+cp kernel.cpython-38-x86_64-linux-gnu.so  ../dl_code_python
+python3 ../dl_code_python/GCN_pubmed.py
+```
+
+## Test for multi-thread GCN
+
+
+```
+cd ../
+rm -rf build
+rm dl_code_python/kernel.cpython-38-x86_64-linux-gnu.so
+mkdir build
+cd build
+cmake ../multi_kernel
+make
+cp kernel.cpython-38-x86_64-linux-gnu.so  ../dl_code_python
+python3 ../dl_code_python/GCN_pubmed.py
+```
+
+
+## Correct Output
+Single-thread GCN: <br/>
+```
+Epoch 183 | Train_Loss: 0.0520
+Epoch 184 | Train_Loss: 0.0518
+Epoch 185 | Train_Loss: 0.0516
+Epoch 186 | Train_Loss: 0.0514
+Epoch 187 | Train_Loss: 0.0512
+Epoch 188 | Train_Loss: 0.0510
+Epoch 189 | Train_Loss: 0.0509
+Epoch 190 | Train_Loss: 0.0507
+Epoch 191 | Train_Loss: 0.0505
+Epoch 192 | Train_Loss: 0.0503
+Epoch 193 | Train_Loss: 0.0502
+Epoch 194 | Train_Loss: 0.0500
+Epoch 195 | Train_Loss: 0.0498
+Epoch 196 | Train_Loss: 0.0496
+Epoch 197 | Train_Loss: 0.0495
+Epoch 198 | Train_Loss: 0.0493
+Epoch 199 | Train_Loss: 0.0491
+the time of graphpy is: 0:00:05.246014
+Epoch 199 | Test_accuracy: 0.7630
+```
+Multi-thread GCN: <br/>
+```
+Epoch 183 | Train_Loss: 0.0502
+Epoch 184 | Train_Loss: 0.0500
+Epoch 185 | Train_Loss: 0.0498
+Epoch 186 | Train_Loss: 0.0496
+Epoch 187 | Train_Loss: 0.0495
+Epoch 188 | Train_Loss: 0.0493
+Epoch 189 | Train_Loss: 0.0491
+Epoch 190 | Train_Loss: 0.0489
+Epoch 191 | Train_Loss: 0.0488
+Epoch 192 | Train_Loss: 0.0486
+Epoch 193 | Train_Loss: 0.0484
+Epoch 194 | Train_Loss: 0.0483
+Epoch 195 | Train_Loss: 0.0481
+Epoch 196 | Train_Loss: 0.0480
+Epoch 197 | Train_Loss: 0.0478
+Epoch 198 | Train_Loss: 0.0477
+Epoch 199 | Train_Loss: 0.0475
+the time of graphpy is: 0:00:03.262408
+Epoch 199 | Test_accuracy: 0.7640
+```
+
